@@ -3,9 +3,18 @@ name = "RAGent"
 version = "1.0.0"
 requires-python = ">=3.11"
 dependencies = [
-    'asyncio == 4.0.0',
+    'asyncio >= 4.0.0',
+    'accelerate >= 1.10.1',
+    'huggingface-hub == 0.35.1',
+    'torch >= 2.8.0',
+    'transformers >= 4.56.2',
+    'sentence-transformers >= 5.1.1',
+    'wikipedia >= 1.4.0',
+    'faiss-cpu >= 1.12.0',
+    'numpy >= 2.3.3'
 ]
 
 
 [project.scripts]
-run-app = "ragent:main"
+ragent = "ragent:main"
+ragent-evaluation = "ragent:evaluation"

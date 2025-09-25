@@ -1,6 +1,14 @@
 # RAGent
 
+This project is an implementation of a RAG-based Q&A Agent for the AI Code Challenge.
+It leverages a lightweight open-source LLM to answer questions with inline citations, drawing context from external
+sources.
+The agent is designed to minimize hallucinations and gracefully handle irrelevant or malicious inputs.
+It includes an evaluation pipeline to assess factual accuracy and citation correctness.
+
 ## Installation
+
+Note: hf-auth-login required for LLM access if using default HuggingFace models.
 
 1. Init venv:
 
@@ -21,7 +29,75 @@
     ```
 
 4. Run the application:
+    - CLI
+      ```sh
+      ragent --question="Python language"
+      ```
+    - Interactive mode
+      ```sh
+      ragent
+      ```
 
-    ```sh
-    run-app
-    ```
+## Running RAGent in Docker (MPS not supported yet)
+
+```
+docker build -t ragent .
+
+# Interactive mode:
+docker run -it --rm ragent
+
+# With a specific question:
+docker run -it --rm ragent --question "What is machine learning?"
+
+# Using different model parameters:
+docker run -it --rm ragent --model "meta-llama/Llama-3.1-8B-Instruct"
+
+# Running the evaluation tool:
+docker run -it --rm ragent ragent-evaluation
+
+# Getting JSON output:
+docker run -it --rm ragent --question "What is machine learning?" --json
+```
+
+### Test / Evaluation
+
+Run the evaluation framework to assess the agent's performance across multiple dimensions, including factual accuracy,
+citation correctness, robustness against adversarial inputs, and recognition of unanswerable questions.
+The framework uses predefined test cases and provides detailed metrics and performance scores.
+
+```sh
+ragent-evaluation
+```
+
+# TODO
+
+- Add more tests
+- Add more retrieval sources
+- Add possibility for custom Models for the factory config
+- Add possibility for custom Retrievers for the factory config
+- Add verification cross-check step
+- Add Docker LLMs prefetch configuration
+- Add more robustness for the inline citations
+- Wrap the Agent as a LangChain tool
+- Wrap the Agent as a BeeAI tool
+- Expose API with FastAPI or Flask
+
+## Accuracy and Hallucination Results
+
+The agent performs well on simple factual questions but struggles with complex queries and adversarial inputs not easily
+searchable on Wikipedia.
+Complex questions can lead to partial answers or incorrect citations due to possible misinterpretation of the context
+required from Wikipedia.
+
+### Mitigation Strategies - TODO
+
+To reduce hallucinations and improve accuracy, consider the following strategies:
+
+- Enhance the retrieval mechanism to ensure more relevant context is provided to the LLM.
+- Fine-tune the LLM on a dataset of question-answer pairs with citations to improve its ability to generate accurate
+  responses.
+- Implement a verification step where the generated answer is cross-checked against the retrieved documents before
+  finalizing the response.
+- Use a more advanced LLM with better comprehension and reasoning capabilities.
+- Incorporate user feedback to iteratively improve the model's performance over time.
+- Expand the knowledge base beyond Wikipedia to include more diverse and authoritative sources.
