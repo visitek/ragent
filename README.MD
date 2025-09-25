@@ -1,4 +1,4 @@
-# RAGent
+# RAGent (MVP)
 
 This project is an implementation of a RAG-based Q&A Agent for the AI Code Challenge.
 It leverages a lightweight open-source LLM to answer questions with inline citations, drawing context from external
@@ -129,3 +129,46 @@ To reduce hallucinations and improve accuracy, consider the following strategies
 - Use a more advanced LLM with better comprehension and reasoning capabilities.
 - Incorporate user feedback to iteratively improve the model's performance over time.
 - Expand the knowledge base beyond Wikipedia to include more diverse and authoritative sources.
+
+## Documentation & Reflection
+
+### Design Decisions
+
+The RAGent implementation involved several key design choices to balance performance, accuracy, and usability:
+
+- **Model Selection**:
+    - We chose lightweight open-source LLMs that strike a balance between performance and resource requirements. This
+      allows the agent to run on consumer hardware while still providing high-quality responses.
+
+- **Retrieval Method**:
+    - Wikipedia was selected as the primary retrieval source due to its breadth of knowledge, reliability, and
+      structured content. The retrieval system employs semantic search to identify the most relevant content for each
+      query.
+    - Wikipedia Search has limited capabilities so we use suggestion feature with query preprocessing to improve the
+      search results.
+
+- **Prompt Design**: Our prompts were carefully engineered to encourage the model to:
+    - Clearly distinguish between facts from retrieved content and inferences
+    - Include specific citations for factual statements
+    - Maintain a consistent, informative tone
+    - Abstain from answering when insufficient information is available
+
+- **Citation System**: The inline citation approach was chosen to make the sourcing transparent and verifiable, allowing
+  users to quickly assess the reliability of different parts of the response.
+
+### Ethical & Safety Considerations
+
+The RAGent implementation addresses several ethical and safety concerns:
+
+- **Hallucination Mitigation**:
+    - By grounding responses in retrieved content and implementing citation requirements, we reduce the risk of the
+      model generating unfounded information. The retrieval-augmented approach ensures the model has access to factual
+      information before generating a response.
+
+- **User Safety**:
+    - Input validation filters potentially harmful or malicious prompts
+    - The agent tries to refuse an engage with requests for illegal, harmful, or unethical content
+
+- **Transparency**:
+    - The citation system and source documentation make the information pipeline transparent to users, allowing them to
+      verify claims and understand the limitations of the responses.
