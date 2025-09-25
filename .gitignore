@@ -1,4 +1,4 @@
 .idea
 .venv
-/*.egg-info
+**/*.egg-info
 _test*
