@@ -68,6 +68,9 @@ class WikipediaRetriever(RetrieverInterface):
 
         def fetch_page(title: str):
             try:
+                if len(fetched) >= top_k:
+                    return []
+
                 page = wikipedia.page(title)
 
                 if page.url in fetched or len(fetched) >= top_k:
