@@ -6,9 +6,35 @@ sources.
 The agent is designed to minimize hallucinations and gracefully handle irrelevant or malicious inputs.
 It includes an evaluation pipeline to assess factual accuracy and citation correctness.
 
+## Retrievers
+
+- Wikipedia (default)
+
+## Example
+
+```
+$ ragent --question="Explain Python language"
+
+--------------------------------------------------
+# Question: Explain Python language
+
+# Answer:
+Python is a high-level, general-purpose, interpreted, object-oriented, multi-paradigm, and dynamically typed programming language known for its readable syntax and broad standard library [2].
+It was created by Guido van Rossum and first released in 1991, emphasizing code readability and developer productivity.
+Python supports multiple programming paradigms, including structured, object-oriented, and functional programming, and features dynamic typing and automatic memory management [1].
+Its syntax is simple and consistent, adhering to the principle that "There should be one—and preferably only one—obvious way to do it." [1].
+
+## Sources:
+  [[1] Python syntax and semantics](https://en.wikipedia.org/wiki/Python_syntax_and_semantics)
+  [[2] Outline of the Python programming language](https://en.wikipedia.org/wiki/Outline_of_the_Python_programming_language)
+
+- Processing time: 18.85 seconds
+--------------------------------------------------
+```
+
 ## Installation
 
-Note: hf-auth-login required for LLM access if using default HuggingFace models.
+> Note: hf-auth-login may be required for some models
 
 1. Init venv:
 
@@ -38,7 +64,7 @@ Note: hf-auth-login required for LLM access if using default HuggingFace models.
       ragent
       ```
 
-## Running RAGent in Docker (MPS not supported yet)
+## Running RAGent in Docker
 
 ```
 docker build -t ragent .
@@ -58,6 +84,8 @@ docker run -it --rm ragent ragent-evaluation
 # Getting JSON output:
 docker run -it --rm ragent --question "What is machine learning?" --json
 ```
+
+> Note: MPS not supported leading to possible performance issues on Apple Silicon
 
 ### Test / Evaluation
 
